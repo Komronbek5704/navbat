@@ -1,0 +1,6 @@
+patient_name,patient_phone,appointment_date,appointment_time,status
+John Doe,+998901234567,2024-04-28,15:30,confirmed
+Aliyeva Kamola,+998901234569,2024-04-28,16:00,pending
+Karimov Otabek,+998901234570,2024-04-29,09:00,confirmed
+John Doe,+998901234567,2024-04-30,14:00,pending
+Admin User,+998901234568,2024-04-28,11:30,completed

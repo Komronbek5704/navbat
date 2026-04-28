@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E-Navbat — Elektron Poliklinika</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gr:#0a6e5e;--grl:#0d8a75;--grd:#064d42;
+  --or:#f5a623;--rd:#e74c6e;--pu:#6c5ce7;--bl:#2980b9;
+  --bg:#f0f6f5;--wh:#fff;--tx:#1a2e2b;--mu:#6b8c87;--bo:#d0e8e4;
+  --sh:0 4px 24px rgba(10,110,94,.10);--sh2:0 8px 40px rgba(10,110,94,.16);
+  --ra:14px;--sw:240px;
+}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;overflow-x:hidden}
+
+/* LOGIN */
+#pgLogin{min-height:100vh;background:linear-gradient(135deg,#064d42 0%,#0a6e5e 50%,#0d9e87 100%);display:flex;align-items:center;justify-content:center}
+.lbox{background:#fff;border-radius:24px;padding:48px 42px;width:420px;max-width:94vw;box-shadow:0 30px 80px rgba(0,0,0,.22);animation:up .5s ease}
+@keyframes up{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}
+.llogo{text-align:center;margin-bottom:30px}
+.licon{width:66px;height:66px;background:linear-gradient(135deg,var(--gr),var(--grl));border-radius:18px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:12px;box-shadow:0 8px 20px rgba(10,110,94,.28)}
+.licon svg{width:34px;height:34px;fill:#fff}
+.llogo h1{font-family:'Playfair Display',serif;font-size:1.9rem;color:var(--grd)}
+.llogo p{font-size:.82rem;color:var(--mu);margin-top:3px}
+.ltabs{display:flex;background:var(--bg);border-radius:11px;padding:4px;margin-bottom:24px;gap:3px}
+.ltab{flex:1;padding:9px;border:none;background:transparent;border-radius:8px;font-family:inherit;font-size:.86rem;font-weight:700;color:var(--mu);cursor:pointer;transition:all .2s}
+.ltab.on{background:#fff;color:var(--gr);box-shadow:0 2px 8px rgba(0,0,0,.09)}
+.lfg{margin-bottom:15px}
+.lfg label{display:block;font-size:.73rem;font-weight:800;color:var(--mu);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
+.lfg input{width:100%;padding:12px 14px;border:2px solid var(--bo);border-radius:10px;font-family:inherit;font-size:.92rem;color:var(--tx);outline:none;transition:border .2s}
+.lfg input:focus{border-color:var(--gr)}
+.lbtn{width:100%;padding:14px;background:linear-gradient(135deg,var(--gr),var(--grl));color:#fff;border:none;border-radius:11px;font-family:inherit;font-size:.96rem;font-weight:800;cursor:pointer;transition:all .2s;margin-top:4px}
+.lbtn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(10,110,94,.32)}
+.lfoot{text-align:center;margin-top:14px;font-size:.79rem;color:var(--mu)}
+
+/* APP SHELL */
+#pgApp{display:none}
+.hdr{background:#fff;height:62px;display:flex;align-items:center;padding:0 22px;gap:12px;box-shadow:0 2px 12px rgba(10,110,94,.08);position:sticky;top:0;z-index:100}
+.hdr-logo{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--grd);flex:1}
+.hdr-logo span{color:var(--gr)}
+.role-badge{padding:4px 11px;border-radius:50px;font-size:.73rem;font-weight:800}
+.hdr-bell{width:38px;height:38px;border-radius:50%;border:none;background:var(--bg);cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative;transition:background .2s}
+.hdr-bell:hover{background:var(--bo)}
+.hdr-bell svg{width:18px;height:18px;stroke:var(--mu);fill:none;stroke-width:2}
+.nbadge{position:absolute;top:6px;right:6px;width:9px;height:9px;background:var(--rd);border-radius:50%;border:2px solid #fff}
+.hdr-user{display:flex;align-items:center;gap:9px;background:var(--bg);padding:7px 13px;border-radius:50px;cursor:pointer}
+.av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--gr),var(--or));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:.78rem;flex-shrink:0}
+</style>
+</head>
+<body>
+
+<!-- LOGIN PAGE -->
+<div id="pgLogin">
+  <div class="lbox">
+    <div class="llogo">
+      <div class="licon">
+        <svg viewBox="0 0 24 24"><path d="M19 8h-2v3h-3v2h3v3h2v-3h3v-2h-3zM4 8h8v2H4zM4 13h5v2H4zM4 18h8v2H4z"/></svg>
+      </div>
+      <h1>E-Navbat</h1>
+      <p>Elektron poliklinika tizimi</p>
+    </div>
+    
+    <div class="ltabs">
+      <button class="ltab on" onclick="switchTab('login')">Kirish</button>
+      <button class="ltab" onclick="switchTab('register')">Ro'yxatdan o'tish</button>
+    </div>
+    
+    <form id="loginForm" onsubmit="handleLogin(event)">
+      <div class="lfg">
+        <label>Telefon raqami</label>
+        <input type="tel" placeholder="+998 90 123 45 67" required>
+      </div>
+      <div class="lfg">
+        <label>Parol</label>
+        <input type="password" placeholder="Parolni kiriting" required>
+      </div>
+      <button type="submit" class="lbtn">Kirish</button>
+    </form>
+    
+    <form id="registerForm" style="display:none" onsubmit="handleRegister(event)">
+      <div class="lfg">
+        <label>To'liq ism</label>
+        <input type="text" placeholder="Ism familiya" required>
+      </div>
+      <div class="lfg">
+        <label>Telefon raqami</label>
+        <input type="tel" placeholder="+998 90 123 45 67" required>
+      </div>
+      <div class="lfg">
+        <label>Parol</label>
+        <input type="password" placeholder="Parolni kiriting" required>
+      </div>
+      <button type="submit" class="lbtn">Ro'yxatdan o'tish</button>
+    </form>
+    
+    <div class="lfoot">
+      <p>© 2024 E-Navbat. Barcha huquqlar himoyalangan.</p>
+    </div>
+  </div>
+</div>
+
+<!-- APP PAGE -->
+<div id="pgApp">
+  <header class="hdr">
+    <div class="hdr-logo">E-<span>Navbat</span></div>
+    <div class="role-badge" style="background:var(--gr);color:#fff">Bemor</div>
+    <button class="hdr-bell">
+      <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+      <span class="nbadge"></span>
+    </button>
+    <div class="hdr-user">
+      <div class="av">JD</div>
+      <span>John Doe</span>
+    </div>
+  </header>
+  
+  <main style="padding:24px">
+    <h2 style="margin-bottom:20px">Shifokorlarga navbat</h2>
+    <p style="color:var(--mu);margin-bottom:24px">Kerakli shifokorni tanlang va navbat oling</p>
+    
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px">
+      <div style="background:#fff;border-radius:16px;padding:20px;box-shadow:var(--sh)">
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
+          <div style="width:50px;height:50px;border-radius:12px;background:linear-gradient(135deg,var(--gr),var(--grl));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1.2rem">TH</div>
+          <div>
+            <h3 style="margin-bottom:4px">Dr. Toshmatov Husniddin</h3>
+            <p style="color:var(--mu);font-size:.85rem">Terapevt</p>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="color:var(--gr);font-weight:700">15:00 - 16:00</span>
+          <button style="padding:8px 16px;background:var(--gr);color:#fff;border:none;border-radius:8px;font-size:.85rem;font-weight:700;cursor:pointer">Navbat olish</button>
+        </div>
+      </div>
+      
+      <div style="background:#fff;border-radius:16px;padding:20px;box-shadow:var(--sh)">
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
+          <div style="width:50px;height:50px;border-radius:12px;background:linear-gradient(135deg,var(--bl),var(--pu));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1.2rem">AK</div>
+          <div>
+            <h3 style="margin-bottom:4px">Dr. Akramova Kamola</h3>
+            <p style="color:var(--mu);font-size:.85rem">Pediator</p>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="color:var(--gr);font-weight:700">16:00 - 17:00</span>
+          <button style="padding:8px 16px;background:var(--gr);color:#fff;border:none;border-radius:8px;font-size:.85rem;font-weight:700;cursor:pointer">Navbat olish</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+// API base URL - Vercel deploymentda avtomatik ishlaydi
+const API_BASE = window.location.origin;
+
+// API calls
+async function fetchDoctors() {
+  try {
+    const response = await fetch(`${API_BASE}/api/doctors`);
+    if (!response.ok) throw new Error('Shifokorlarni yuklashda xatolik');
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching doctors:', error);
+    return [];
+  }
+}
+
+async function createAppointment(appointmentData) {
+  try {
+    const response = await fetch(`${API_BASE}/api/appointments`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(appointmentData),
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Navbat olishda xatolik');
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error creating appointment:', error);
+    throw error;
+  }
+}
+
+async function fetchAppointments(phone) {
+  try {
+    const response = await fetch(`${API_BASE}/api/appointments?phone=${encodeURIComponent(phone)}`);
+    if (!response.ok) throw new Error('Navbatlarni yuklashda xatolik');
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching appointments:', error);
+    return [];
+  }
+}
+
+function switchTab(tab) {
+  const tabs = document.querySelectorAll('.ltab');
+  const loginForm = document.getElementById('loginForm');
+  const registerForm = document.getElementById('registerForm');
+  
+  if (tab === 'login') {
+    tabs[0].classList.add('on');
+    tabs[1].classList.remove('on');
+    loginForm.style.display = 'block';
+    registerForm.style.display = 'none';
+  } else {
+    tabs[0].classList.remove('on');
+    tabs[1].classList.add('on');
+    loginForm.style.display = 'none';
+    registerForm.style.display = 'block';
+  }
+}
+
+async function handleLogin(e) {
+  e.preventDefault();
+  const phone = e.target.querySelector('input[type="tel"]').value;
+  const password = e.target.querySelector('input[type="password"]').value;
+  
+  // Simple validation
+  if (!phone || !password) {
+    alert('Iltimos, barcha maydonlarni to\'ldiring');
+    return;
+  }
+  
+  // Load user appointments
+  try {
+    const appointments = await fetchAppointments(phone);
+    localStorage.setItem('userPhone', phone);
+    localStorage.setItem('userAppointments', JSON.stringify(appointments));
+    
+    document.getElementById('pgLogin').style.display = 'none';
+    document.getElementById('pgApp').style.display = 'block';
+    
+    // Load doctors
+    loadDoctors();
+  } catch (error) {
+    alert('Kirishda xatolik: ' + error.message);
+  }
+}
+
+function handleRegister(e) {
+  e.preventDefault();
+  switchTab('login');
+}
+
+async function loadDoctors() {
+  try {
+    const doctors = await fetchDoctors();
+    displayDoctors(doctors);
+  } catch (error) {
+    console.error('Error loading doctors:', error);
+  }
+}
+
+function displayDoctors(doctors) {
+  const main = document.querySelector('main');
+  const doctorsGrid = document.createElement('div');
+  doctorsGrid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-top:20px';
+  
+  doctors.forEach(doctor => {
+    const doctorCard = document.createElement('div');
+    doctorCard.style.cssText = 'background:#fff;border-radius:16px;padding:20px;box-shadow:var(--sh)';
+    doctorCard.innerHTML = `
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
+        <div style="width:50px;height:50px;border-radius:12px;background:linear-gradient(135deg,var(--gr),var(--grl));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1.2rem">${doctor.name.split(' ').map(n => n[0]).join('').toUpperCase()}</div>
+        <div>
+          <h3 style="margin-bottom:4px">${doctor.name}</h3>
+          <p style="color:var(--mu);font-size:.85rem">${doctor.specialty}</p>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="color:var(--gr);font-weight:700">${doctor.available_time}</span>
+        <button onclick="bookAppointment(${doctor.id}, '${doctor.name}')" style="padding:8px 16px;background:var(--gr);color:#fff;border:none;border-radius:8px;font-size:.85rem;font-weight:700;cursor:pointer">Navbat olish</button>
+      </div>
+    `;
+    doctorsGrid.appendChild(doctorCard);
+  });
+  
+  main.appendChild(doctorsGrid);
+}
+
+async function bookAppointment(doctorId, doctorName) {
+  const userPhone = localStorage.getItem('userPhone');
+  const userName = prompt('Ismingizni kiriting:');
+  
+  if (!userName || !userPhone) {
+    alert('Iltimos, avval login qiling');
+    return;
+  }
+  
+  // Bugungi sanani olish
+  const today = new Date().toISOString().split('T')[0];
+  const appointmentDate = prompt(`Navbat sanasini kiriting (masalan: ${today}):`, today);
+  
+  if (!appointmentDate) {
+    return;
+  }
+  
+  const appointmentTime = prompt('Navbat vaqtini kiriting (masalan: 14:30):');
+  
+  if (!appointmentTime) {
+    return;
+  }
+  
+  const symptoms = prompt('Shikoyatlaringizni qisqacha yozing (ixtiyoriy):');
+  const notes = prompt('Qo\'shma izohlar (ixtiyoriy):');
+  
+  try {
+    const result = await createAppointment({
+      doctor_id: doctorId,
+      patient_name: userName,
+      patient_phone: userPhone,
+      appointment_date: appointmentDate,
+      appointment_time: appointmentTime,
+      symptoms: symptoms || '',
+      notes: notes || ''
+    });
+    
+    alert(`✅ ${doctorName} uchun navbat muvaffaqiyatli olindi!\nNavbat raqami: ${result.id}\nSana: ${appointmentDate}\nVaqt: ${appointmentTime}`);
+    
+    // Refresh appointments
+    const appointments = await fetchAppointments(userPhone);
+    localStorage.setItem('userAppointments', JSON.stringify(appointments));
+    
+  } catch (error) {
+    alert('❌ Navbat olishda xatolik: ' + error.message);
+  }
+}
+
+// Check if user is logged in
+document.addEventListener('DOMContentLoaded', () => {
+  const userPhone = localStorage.getItem('userPhone');
+  if (userPhone) {
+    document.getElementById('pgLogin').style.display = 'none';
+    document.getElementById('pgApp').style.display = 'block';
+    loadDoctors();
+  }
+});
+</script>
+
+</body>
+</html>

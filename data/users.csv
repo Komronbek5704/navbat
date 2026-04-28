@@ -1,0 +1,5 @@
+name,phone,password_hash,role
+John Doe,+998901234567,password123,patient
+Admin User,+998901234568,password123,admin
+Aliyeva Kamola,+998901234569,password123,patient
+Karimov Otabek,+998901234570,password123,patient

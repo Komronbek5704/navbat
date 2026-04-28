@@ -1,0 +1,35 @@
+{
+  "name": "e-navbat",
+  "version": "1.0.0",
+  "description": "E-Navbat elektron poliklinika tizimi - Full-Stack",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve -s . -l 3000",
+    "build": "echo 'No build needed for static site'",
+    "dev": "serve -s . -l 3000"
+  },
+  "keywords": [
+    "clinic",
+    "healthcare",
+    "queue",
+    "uzbekistan",
+    "vercel",
+    "serverless",
+    "supabase",
+    "full-stack"
+  ],
+  "author": "E-Navbat Team",
+  "license": "MIT",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.38.4",
+    "cors": "^2.8.5",
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3"
+  },
+  "devDependencies": {
+    "serve": "^14.2.1"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
